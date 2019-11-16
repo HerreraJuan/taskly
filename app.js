@@ -59,13 +59,16 @@ function obtenerTareasLocalStorage(){
 }
 
 function eliminarTarea(e){
-  e.target.parentElement.remove();
-  if(e.type == "dblclick"){
-    eliminarTareaLocalStorage(e.target.innerText);
-  } else {
-    eliminarTareaLocalStorage(e.target.previousElementSibling.innerText);
+  if(e.target.localName != 'ul'){
+    e.target.parentElement.remove();
+    if(e.type == "dblclick"){
+      console.log("asd");
+      eliminarTareaLocalStorage(e.target.innerText);
+    } else{
+      eliminarTareaLocalStorage(e.target.previousElementSibling.innerText);
+    }
+    contarTareas();
   }
-  contarTareas();
 }
 
 function modificarTarea(e){
