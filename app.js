@@ -1,45 +1,52 @@
-//Inicializar event listeners
-var listaTareas = document.querySelector('.tareas').children[1];
-listaTareas.onclick = modificarTarea;
-listaTareas.ondblclick = eliminarTarea;
-document.querySelector('form').onsubmit = agregarTarea;
+var listaTareas;
 
+iniciarApp();
 mostrarTareas();
 contarTareas();
+
+//Inicializar event listeners
+function iniciarApp(){
+  listaTareas = document.querySelector('.tareas').children[1];
+  listaTareas.onclick = modificarTarea;
+  listaTareas.ondblclick = eliminarTareaDOM;
+  document.querySelector('form').onsubmit = agregarTarea;
+}
 
 function contarTareas(){
   //Obtiene tareas totales y completas
   let totalTareas = listaTareas.children.length;
+  //Selecciona las tareas con clase 'completa'.
   let tareasCompletas = document.querySelectorAll(".completa").length;
 
-  //Agrega un contador con las tareas completas/totales.
+  //Agrega el contador con las tareas completas/totales.
   document.getElementById('conteo-tareas').innerText =  `${tareasCompletas}\\${totalTareas}`
 }
 
-function agregarTarea(){
+function agregarTarea(e){
+  //Obtiene el texto que ingresa el usuario como tarea
   let textoTarea = document.getElementById('nueva-tarea');
 
-  //No hace nada si el input está vacio
+  //No hace nada si el input está vacio pero debería agregar una alerta.
   if (!textoTarea.value) {
+    //agregarAlerta();
     return;
+  } else {
+    /*  Crea un item de lista y asigna el span con el cuerpo de la tarea nueva,
+    *   le agrega la clase 'incompleta' por defecto y crea el botón de eliminar.
+    */
+    let tarea = document.createElement('li');
+    tarea.innerHTML = `<span class="incompleta">${textoTarea.value}</span><span>x</span>`;
+
+    //Agrega la tarea al listado de tareas y a localStorage.
+    listaTareas.appendChild(tarea);
+    agregarTareaLocalStorage(textoTarea.value);
+
+    //Envia el formulario y limpia el input.
+    e.target.submit();
+    e.target.reset();
+
+    contarTareas();
   }
-
-  let tarea = document.createElement('li');
-  let spanTarea = document.createElement('span');
-  let spanEliminar = document.createElement('span');
-
-  spanTarea.innerText = textoTarea.value;
-  spanTarea.classList.add("incompleta");
-  spanEliminar.innerText = 'x';
-
-  tarea.appendChild(spanTarea);
-  tarea.appendChild(spanEliminar);
-  listaTareas.appendChild(tarea);
-
-  agregarTareaLocalStorage(textoTarea.value);
-  textoTarea.value = "";
-
-  contarTareas();
 }
 
 function agregarTareaLocalStorage(tarea){
@@ -47,6 +54,7 @@ function agregarTareaLocalStorage(tarea){
   tareas.push(tarea);
   localStorage.setItem('tareas', JSON.stringify(tareas));
 }
+
 function obtenerTareasLocalStorage(){
   let tareas;
 
@@ -58,11 +66,10 @@ function obtenerTareasLocalStorage(){
   return tareas;
 }
 
-function eliminarTarea(e){
+function eliminarTareaDOM(e){
   if(e.target.localName != 'ul'){
     e.target.parentElement.remove();
     if(e.type == "dblclick"){
-      console.log("asd");
       eliminarTareaLocalStorage(e.target.innerText);
     } else{
       eliminarTareaLocalStorage(e.target.previousElementSibling.innerText);
@@ -84,7 +91,7 @@ function modificarTarea(e){
   }
 
   if(elemento.innerText == "x"){
-    eliminarTarea(e);
+    eliminarTareaDOM(e);
   }
   contarTareas();
 }

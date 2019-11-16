@@ -92,7 +92,12 @@ form input[type=submit]:hover{
 .tareas li{
   display: grid;
   grid-template-columns: 1fr auto;
-  margin: 1em 0;
+  padding-bottom: 1em;
+}
+.tareas li+li{
+  padding: 1em 0;
+
+  border-top: 1px var(--color-normal) solid;
 }
 .tareas ul span:nth-child(even){
   padding: 0.5em 1em;
