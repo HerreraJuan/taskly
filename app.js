@@ -23,6 +23,7 @@ function contarTareas(){
 }
 
 function agregarTarea(e){
+  e.preventDefault();
   //Obtiene el texto que ingresa el usuario como tarea
   let textoTarea = document.getElementById('nueva-tarea');
 
@@ -42,13 +43,14 @@ function agregarTarea(e){
     agregarTareaLocalStorage(textoTarea.value);
 
     //Envia el formulario y limpia el input.
-    e.target.submit();
     e.target.reset();
 
+    //Actualiza.
     contarTareas();
   }
 }
 
+//Agrega la tarea a local storage.
 function agregarTareaLocalStorage(tarea){
   let tareas = obtenerTareasLocalStorage();
   tareas.push(tarea);
