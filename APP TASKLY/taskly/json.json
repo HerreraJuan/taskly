@@ -1,0 +1,30 @@
+{
+  "id": "1",
+  "idCliente": "8798798",
+  "fecha": "28/02/1999",
+  "idUsuario": "4654654",
+  "Total": "33.00",
+  "tipo":"1",
+  "detalle_venta":[
+    	{
+        "idProducto": "8798798",
+        "cantidad": "22",
+        "precio": "1.000",
+        "subtotal": "33.00"
+	},
+        {
+        "idProducto": "879812798",
+        "cantidad": "222",
+        "precio": "1.000",
+        "subtotal": "33.00"
+	},
+        {
+        "idProducto": "12",
+        "cantidad": "221",
+        "precio": "1.500",
+        "subtotal": "33.00"
+	}
+   
+   ]
+
+}
